@@ -363,7 +363,7 @@ def generate_plate_discipline_table(pitcher_name, batter_side, strikes, balls, d
         }
         return metrics
 
-
+    try:
         # Group by 'TaggedPitchType' and calculate plate discipline metrics
         plate_discipline_data = pitcher_data.groupby('TaggedPitchType').apply(calculate_metrics).apply(pd.Series).reset_index()
 
