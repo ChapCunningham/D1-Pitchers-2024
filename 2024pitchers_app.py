@@ -334,7 +334,7 @@ def generate_plate_discipline_table(pitcher_name, batter_side, strikes, balls, d
 
 
 
-   def calculate_metrics(df):
+    def calculate_metrics(df):
     in_zone_pitches = calculate_in_zone(df)
     total_in_zone = len(in_zone_pitches)
 
@@ -388,6 +388,7 @@ try:
 
 except Exception as e:
     st.write(f"Error generating plate discipline table: {e}")
+
 
 
 # Define a color dictionary for each pitch type
