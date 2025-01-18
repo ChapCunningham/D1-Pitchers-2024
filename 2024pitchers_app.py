@@ -335,7 +335,7 @@ def generate_plate_discipline_table(pitcher_name, batter_side, strikes, balls, d
                 'Swing%': (total_swings / len(df)) * 100 if len(df) > 0 else 'N/A',
                 'Whiff%': (total_whiffs / total_swings) * 100 if total_swings > 0 else 'N/A',
                 'Chase%': (total_chase / total_swings) * 100 if total_swings > 0 else 'N/A',
-                'InZoneWhiff%': (in_zone_whiffs / total_in_zone) * 100 if total_in_zone > 0 else 'N/A'
+                'InZoneWhiff%': (in_zone_whiffs / total_in_zone) * 100 if total_in_zone > 0 else 'N/A',
                 'Strike%': (total_strikes / len(df)) * 100 if len(df) > 0 else 'N/A'
             }
             return metrics
