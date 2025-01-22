@@ -15,7 +15,7 @@ def load_data(file_path):
     return pd.read_csv(file_path, parse_dates=['Date'])  # Parse 'Date' column as datetime
 
 test_df = load_data(file_path)
-test_df = test_df[(test_df['PitcherTeam'] == 'TEX_LON') | (test_df['PitcherTeam'] == 'ARI_WIL') | (test_df['PitcherTeam'] == 'CLE_TIG')]
+
 
 # Ensure numeric conversion for the columns where aggregation will be done
 numeric_columns = ['RelSpeed', 'SpinRate', 'Tilt', 'RelHeight', 'RelSide', 
