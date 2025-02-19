@@ -395,12 +395,14 @@ except Exception as e:
 color_dict = {
     'Fastball': 'blue',
     'FourSeamFastball': 'blue',
+    'Four-Seam': 'blue',
     'TwoSeamFastball': 'gold',
     'Sinker': 'gold',
     'Slider': 'green',
     'Curveball': 'red',
     'Cutter': 'orange',
     'ChangeUp': 'purple',
+    'Changeup': 'purple',
     'Splitter': 'teal',
     'Unknown': 'black',
     'Other': 'black'
