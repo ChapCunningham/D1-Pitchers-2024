@@ -134,7 +134,7 @@ def plot_heatmaps(pitcher_name, batter_side, strikes, balls, date_filter_option,
             return
 
         # Get unique pitch types thrown by the selected pitcher
-        unique_pitch_types = plot_data['TaggedPitchType'].unique()
+        unique_pitch_types = plot_data['AutoPitchType'].unique()
 
         # Limit number of subplots per row (e.g., 3 per row)
         n_pitch_types = len(unique_pitch_types)
@@ -155,7 +155,7 @@ def plot_heatmaps(pitcher_name, batter_side, strikes, balls, date_filter_option,
 
         # Loop over each unique pitch type and create heatmaps
         for i, (ax, pitch_type) in enumerate(zip(axes, unique_pitch_types)):
-            pitch_type_data = plot_data[plot_data['TaggedPitchType'] == pitch_type]
+            pitch_type_data = plot_data[plot_data['AutoPitchType'] == pitch_type]
 
             if len(pitch_type_data) < 5:  # Switch to scatter plot for small data
                 sns.scatterplot(
@@ -269,9 +269,9 @@ def generate_pitch_traits_table(pitcher_name, batter_side, strikes, balls, date_
             st.write("No data available for the selected parameters.")
             return
 
-        # Group by 'TaggedPitchType' and calculate mean values for each group
-        grouped_data = pitcher_data.groupby('TaggedPitchType').agg(
-            Count=('TaggedPitchType', 'size'),
+        # Group by 'AutoPitchType' and calculate mean values for each group
+        grouped_data = pitcher_data.groupby('AutoPitchType').agg(
+            Count=('AutoPitchType', 'size'),
             RelSpeed=('RelSpeed', 'mean'),
             InducedVertBreak=('InducedVertBreak', 'mean'),
             HorizontalBreak=('HorzBreak', 'mean'), 
@@ -309,18 +309,18 @@ def generate_plate_discipline_table(pitcher_name, batter_side, strikes, balls, d
         # Calculate total pitches
         total_pitches = len(pitcher_data)
 
-        # Group by 'TaggedPitchType' and calculate plate discipline metrics
-        plate_discipline_data = pitcher_data.groupby('TaggedPitchType').apply(calculate_metrics).apply(pd.Series).reset_index()
+        # Group by 'AutoPitchType' and calculate plate discipline metrics
+        plate_discipline_data = pitcher_data.groupby('AutoPitchType').apply(calculate_metrics).apply(pd.Series).reset_index()
 
         # Calculate the Pitch% column
-        plate_discipline_data['Count'] = pitcher_data.groupby('TaggedPitchType')['TaggedPitchType'].count().values
+        plate_discipline_data['Count'] = pitcher_data.groupby('AutoPitchType')['AutoPitchType'].count().values
         plate_discipline_data['Pitch%'] = (plate_discipline_data['Count'] / total_pitches) * 100
 
         # Sort by Count (most thrown to least thrown)
         plate_discipline_data = plate_discipline_data.sort_values(by='Count', ascending=False)
 
         # Reorder columns
-        plate_discipline_data = plate_discipline_data[['TaggedPitchType', 'Count', 'Pitch%', 'Strike%', 'InZone%', 'Swing%', 'Whiff%', 'Chase%', 'InZoneWhiff%']]
+        plate_discipline_data = plate_discipline_data[['AutoPitchType', 'Count', 'Pitch%', 'Strike%', 'InZone%', 'Swing%', 'Whiff%', 'Chase%', 'InZoneWhiff%']]
 
         # Format the data before displaying
         formatted_data = format_dataframe(plate_discipline_data)
@@ -365,18 +365,18 @@ def calculate_metrics(df):
 
 # Main logic for generating the plate discipline table
 try:
-    # Group by 'TaggedPitchType' and calculate plate discipline metrics
-    plate_discipline_data = pitcher_data.groupby('TaggedPitchType').apply(calculate_metrics).apply(pd.Series).reset_index()
+    # Group by 'AutoPitchType' and calculate plate discipline metrics
+    plate_discipline_data = pitcher_data.groupby('AutoPitchType').apply(calculate_metrics).apply(pd.Series).reset_index()
 
     # Calculate the Pitch% column
-    plate_discipline_data['Count'] = pitcher_data.groupby('TaggedPitchType')['TaggedPitchType'].count().values
+    plate_discipline_data['Count'] = pitcher_data.groupby('AutoPitchType')['AutoPitchType'].count().values
     plate_discipline_data['Pitch%'] = (plate_discipline_data['Count'] / total_pitches) * 100
 
     # Sort by Count (most thrown to least thrown)
     plate_discipline_data = plate_discipline_data.sort_values(by='Count', ascending=False)
 
     # Reorder columns
-    plate_discipline_data = plate_discipline_data[['TaggedPitchType', 'Count', 'Pitch%', 'Strike%', 'InZone%', 'Swing%', 'Whiff%', 'Chase%', 'InZoneWhiff%']]
+    plate_discipline_data = plate_discipline_data[['AutoPitchType', 'Count', 'Pitch%', 'Strike%', 'InZone%', 'Swing%', 'Whiff%', 'Chase%', 'InZoneWhiff%']]
 
     # Format the data before displaying
     formatted_data = format_dataframe(plate_discipline_data)
@@ -443,9 +443,9 @@ def plot_pitch_movement(pitcher_name, batter_side, strikes, balls, date_filter_o
         plt.axvline(0, color='black', linewidth=2, zorder=1)  # Vertical line through the origin
 
         # Plot each pitch, colored by pitch type, with a higher z-order
-        unique_pitch_types = movement_data['TaggedPitchType'].unique()
+        unique_pitch_types = movement_data['AutoPitchType'].unique()
         for pitch_type in unique_pitch_types:
-            pitch_type_data = movement_data[movement_data['TaggedPitchType'] == pitch_type]
+            pitch_type_data = movement_data[movement_data['AutoPitchType'] == pitch_type]
 
             # Set color based on pitch type, default to black for unknown types
             color = color_dict.get(pitch_type, 'black')
